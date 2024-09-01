@@ -8,28 +8,36 @@ import { RecyclerScheduling } from './domain/entities/recycler-scheduling.entity
 import { UserScheduling } from './domain/entities/user-scheduling.entity';
 import { NeighborhoodRoute } from './domain/entities/neighborhood-route.entity';
 import { ScheduleModule } from '@nestjs/schedule';
-import 'dotenv/config';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 
 @Module({
   imports: [
+    ConfigModule.forRoot({
+      envFilePath: '.env',
+      isGlobal: true,
+    }),
     ScheduleModule.forRoot(),
-    TypeOrmModule.forRoot({
-      type: 'postgres',
-      host: process.env.DB_HOST,
-      port: parseInt(process.env.DB_PORT),
-      username: process.env.DB_USERNAME,
-      password: process.env.DB_PASSWORD,
-      database: process.env.DB_DATABASE,
-      entities: [
-        Address,
-        User,
-        Recycler,
-        RecyclerScheduling,
-        UserScheduling,
-        NeighborhoodRoute,
-      ],
-      synchronize: true,
-      logging: true,
+    TypeOrmModule.forRootAsync({
+      imports: [ConfigModule],
+      inject: [ConfigService],
+      useFactory: (configService: ConfigService) => ({
+        type: 'postgres',
+        host: configService.get<string>('PGHOST'),
+        port: configService.get<number>('PGPORT'),
+        username: configService.get<string>('PGUSER'),
+        password: configService.get<string>('PGPASSWORD'),
+        database: configService.get<string>('PGDATABASE'),
+        entities: [
+          Address,
+          User,
+          Recycler,
+          RecyclerScheduling,
+          UserScheduling,
+          NeighborhoodRoute,
+        ],
+        synchronize: true,
+        logging: true,
+      })
     }),
     ApplicationModule,
   ],
