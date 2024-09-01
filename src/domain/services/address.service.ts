@@ -38,7 +38,7 @@ export class AddressService implements IService<Address, CreateAddressDto> {
       return await this.save(address);
     } catch (error) {
       throw new InternalServerErrorException(
-        `Can't create address. Internal server error: ${error}`,
+        `Can't create address for user. Internal server error: ${error}`,
       );
     }
   }

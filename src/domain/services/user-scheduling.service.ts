@@ -46,7 +46,7 @@ export class UserSchedulingService implements IUserSchedulingService {
       return await this.save(userScheduling as UserScheduling);
     } catch (error) {
       throw new InternalServerErrorException(
-        `Can't create user-scheduling. Internal server error: ${error}`,
+        `Can't create user schedule. Internal server error: ${error}`,
       );
     }
   }
@@ -55,7 +55,7 @@ export class UserSchedulingService implements IUserSchedulingService {
     const userScheduling = await this.getById(id);
     if (!userScheduling) {
       throw new NotFoundException(
-        `No user-scheduling found for the given id #${id}`,
+        `No user schedule found with the given id #${id}`,
       );
     }
     try {

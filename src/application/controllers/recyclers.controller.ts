@@ -15,7 +15,9 @@ import { CreateRecyclerDto } from '../dtos/create-recycler.dto';
 import { IRecyclerService } from '../../domain/interfaces/recycler-service.interface';
 import { CreateRecyclerValidationPipe } from '../validators/create-recycler-validation.pipe';
 import { Recycler } from '../../domain/entities/recycler.entity';
+import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 
+@ApiTags('v1/recyclers')
 @Controller('v1/recyclers')
 export class RecyclerController {
   constructor(
@@ -24,6 +26,13 @@ export class RecyclerController {
   ) {}
 
   @Post()
+  @ApiOperation({ summary: 'Create a new recycler' })
+  @ApiResponse({ status: 201, description: 'Recycler registered successfully' })
+  @ApiResponse({ status: 400, description: 'Validation error' })
+  @ApiResponse({
+    status: 500,
+    description: `Can't create recyler. Internal server error`,
+  })
   @UsePipes(CreateRecyclerValidationPipe)
   async create(
     @Body() createRecyclerDto: CreateRecyclerDto,
@@ -46,6 +55,13 @@ export class RecyclerController {
   }
 
   @Get()
+  @ApiOperation({ summary: 'List all recyclers' })
+  @ApiResponse({ status: 200, description: 'Recyclers retrieved successfully' })
+  @ApiResponse({ status: 404, description: 'No recyclers found' })
+  @ApiResponse({
+    status: 500,
+    description: `Can't get recyclers. Internal server error`,
+  })
   async getAll(): Promise<AppResponse<Recycler>> {
     try {
       const recyclers = await this.iRecyclerService.getAll();
@@ -65,6 +81,16 @@ export class RecyclerController {
   }
 
   @Delete(':id')
+  @ApiOperation({ summary: 'Soft remove a recycler' })
+  @ApiResponse({ status: 200, description: 'Recycler deleted successfully' })
+  @ApiResponse({
+    status: 404,
+    description: 'No recycler found with the given id',
+  })
+  @ApiResponse({
+    status: 500,
+    description: `Can't soft delete recycler. Internal server error`,
+  })
   async delete(@Param('id') id: string): Promise<AppResponse<Recycler>> {
     try {
       const route = await this.iRecyclerService.softDelete(id);

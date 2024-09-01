@@ -36,25 +36,41 @@ export class NeighborhoodRouteService implements INeighborhoodRouteService {
   async getByDayShiftNeighborhood(
     userSchedulingParams: UserSchedulingParams,
   ): Promise<NeighborhoodRoute> {
-    userSchedulingParams.neighborhood =
-      userSchedulingParams.neighborhood.toUpperCase();
-    userSchedulingParams.city = userSchedulingParams.city.toUpperCase();
-    const route =
-      await this.iNeighborhoodRouteRepository.findByDayShiftNeighborhood(
-        userSchedulingParams,
-      );
-    if (!route) {
-      throw new NotFoundException(
-        `No route found for the given params: ${JSON.stringify(
+    try {
+      userSchedulingParams.neighborhood =
+        userSchedulingParams.neighborhood.toUpperCase();
+      userSchedulingParams.city = userSchedulingParams.city.toUpperCase();
+      const route =
+        await this.iNeighborhoodRouteRepository.findByDayShiftNeighborhood(
           userSchedulingParams,
-        )}`,
+        );
+      if (!route) {
+        throw new NotFoundException(
+          `No route found for the given params: ${JSON.stringify(
+            userSchedulingParams,
+          )}`,
+        );
+      }
+      return route;
+    } catch (error) {
+      throw new InternalServerErrorException(
+        `Can't get neighborhood route. Internal server error: ${error}`,
       );
     }
-    return route;
   }
 
   async getAll(): Promise<NeighborhoodRoute[]> {
-    return await this.iNeighborhoodRouteRepository.findAll();
+    try {
+      const routes = await this.iNeighborhoodRouteRepository.findAll();
+      if (!routes.length) {
+        throw new NotFoundException('No routes found');
+      }
+      return routes;
+    } catch (error) {
+      throw new InternalServerErrorException(
+        `Can't get neighborhoods routes. Internal server error: ${error}`,
+      );
+    }
   }
 
   async getNeighborhoodsServed(): Promise<

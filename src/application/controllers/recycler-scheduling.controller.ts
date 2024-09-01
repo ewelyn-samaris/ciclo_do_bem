@@ -12,7 +12,9 @@ import { CreateSchedulingDto } from '../dtos/create-scheduling.dto';
 import { IRecyclerSchedulingService } from '../../domain/interfaces/recycler-scheduling-service.interface';
 import { CreateRecyclerSchedulingValidationService } from '../../domain/validators/create-recycler-scheduling-validation.service';
 import { RecyclerScheduling } from '../../domain/entities/recycler-scheduling.entity';
+import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 
+@ApiTags('v1/recycler-schedulings')
 @Controller('v1/recycler-schedulings')
 export class RecyclerSchedulingController {
   constructor(
@@ -22,6 +24,16 @@ export class RecyclerSchedulingController {
   ) {}
 
   @Post(':recyclerId')
+  @ApiOperation({ summary: 'Create collection schedule for a recycler' })
+  @ApiResponse({
+    status: 201,
+    description: 'Recycler schedule created successfully',
+  })
+  @ApiResponse({ status: 400, description: 'Validation error' })
+  @ApiResponse({
+    status: 500,
+    description: `Can't create recycler schedule. Internal server error`,
+  })
   async create(
     @Param('recyclerId') recyclerId: string,
     @Body() createRecyclerSchedulingDto: CreateSchedulingDto,
@@ -37,7 +49,7 @@ export class RecyclerSchedulingController {
       );
       return {
         statusCode: HttpStatus.CREATED,
-        message: 'Recycler scheduling created successfully',
+        message: 'Recycler schedule created successfully',
         date: DateTimeFormatterAdapter.formatDateTimeString(),
         data: recyclerScheduling,
       };

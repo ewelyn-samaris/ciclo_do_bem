@@ -51,7 +51,7 @@ export class RecyclerSchedulingService implements IRecyclerSchedulingService {
       return await this.save(recyclerScheduling as RecyclerScheduling);
     } catch (error) {
       throw new InternalServerErrorException(
-        `Can't create recycler-scheduling. Internal server error: ${error}`,
+        `Can't create recycler schedule. Internal server error: ${error}`,
       );
     }
   }

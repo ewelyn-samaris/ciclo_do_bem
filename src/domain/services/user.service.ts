@@ -28,7 +28,17 @@ export class UserService implements IUserService {
   }
 
   async getAll(): Promise<User[]> {
-    return (await this.iUserRepository.findAll()) as User[];
+    try {
+      const users = await this.iUserRepository.findAll();
+      if (!users.length) {
+        throw new NotFoundException('No users found');
+      }
+      return users;
+    } catch (error) {
+      throw new InternalServerErrorException(
+        `Can't get users. Internal server error: ${error}`,
+      );
+    }
   }
 
   async getById(id: string): Promise<User> {

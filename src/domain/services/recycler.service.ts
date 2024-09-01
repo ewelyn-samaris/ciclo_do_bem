@@ -23,7 +23,17 @@ export class RecyclerService implements IRecyclerService {
   }
 
   async getAll(): Promise<Recycler[]> {
-    return (await this.iRecyclerRepository.findAll()) as Recycler[];
+    try {
+      const recyclers = await this.iRecyclerRepository.findAll();
+      if (!recyclers.length) {
+        throw new NotFoundException('No recyclers found');
+      }
+      return recyclers;
+    } catch (error) {
+      throw new InternalServerErrorException(
+        `Can't get recyclers. Internal server error: ${error}`,
+      );
+    }
   }
 
   async getById(id: string): Promise<Recycler> {

@@ -22,7 +22,11 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
       inject: [ConfigService],
       useFactory: (configService: ConfigService) => ({
         type: 'postgres',
-        url: configService.get<string>('DATABASE_URL'),
+        host: configService.get<string>('PGHOST'),
+        port: configService.get<number>('PGPORT'),
+        username: configService.get<string>('PGUSER'),
+        password: configService.get<string>('PGPASSWORD'),
+        database: configService.get<string>('PGDATABASE'),
         entities: [
           Address,
           User,
@@ -33,7 +37,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
         ],
         synchronize: true,
         logging: true,
-      })
+      }),
     }),
     ApplicationModule,
   ],

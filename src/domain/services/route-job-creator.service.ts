@@ -14,7 +14,7 @@ export class RouteJobCreator {
 
   private readonly logger = new Logger(RouteJobCreator.name);
 
-  @Cron('0 0 2 * * 1-6', { name: 'create-routes' })
+  @Cron('0 0 3 * * 1-6', { name: 'create-routes' })
   async createNeighborhoodRoutes() {
     console.log('***** Iniciando JOB: create-routes *****');
     this.logger.debug(
