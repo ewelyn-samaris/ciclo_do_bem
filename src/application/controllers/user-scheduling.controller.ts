@@ -1,12 +1,5 @@
-import {
-  Body,
-  Controller,
-  HttpStatus,
-  Inject,
-  Param,
-  Patch,
-  Post,
-} from '@nestjs/common';
+import { Controller, HttpStatus, Inject } from '@nestjs/common';
+import { Body, Param, Patch, Post } from '@nestjs/common';
 import { AppResponse } from '../../domain/models/app-response.model';
 import { CreateSchedulingDto } from '../dtos/create-scheduling.dto';
 import { DateTimeFormatterAdapter } from '../../infrastructure/date-time-formatter.adapter';
@@ -14,6 +7,7 @@ import { IUserSchedulingService } from '../../domain/interfaces/user-scheduling-
 import { CreateUserSchedulingValidationService } from '../../domain/validators/create-user-scheduling-validation.service';
 import { UserScheduling } from '../../domain/entities/user-scheduling.entity';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { UUIDValidationService } from '../../domain/validators/uuid-validation.service';
 
 @ApiTags('v1/user-schedulings')
 @Controller('v1/user-schedulings')
@@ -39,6 +33,7 @@ export class UserSchedullingController {
     @Param('userId') userId: string,
     @Body() createUserSchedulingDto: CreateSchedulingDto,
   ): Promise<AppResponse<UserScheduling>> {
+    UUIDValidationService.validate(userId);
     await this.createUserSchedulingValidationService.validate(userId);
     try {
       const userScheduling = await this.iUserSchedulingService.create(
@@ -66,6 +61,7 @@ export class UserSchedullingController {
     status: 201,
     description: 'User schedule registered as served successfully',
   })
+  @ApiResponse({ status: 400, description: 'Validation error' })
   @ApiResponse({
     status: 404,
     description: 'No user schedule found with the given id',
@@ -77,6 +73,7 @@ export class UserSchedullingController {
   async registerServedScheduling(
     @Param('id') id: string,
   ): Promise<AppResponse<UserScheduling>> {
+    UUIDValidationService.validate(id);
     try {
       const userScheduling =
         await this.iUserSchedulingService.updateServedScheduling(id);

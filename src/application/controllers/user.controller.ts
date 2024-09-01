@@ -1,16 +1,6 @@
-import {
-  Body,
-  Controller,
-  Delete,
-  Get,
-  HttpStatus,
-  Inject,
-  Param,
-  Patch,
-  Post,
-  Query,
-  UsePipes,
-} from '@nestjs/common';
+import { Body, HttpStatus, Inject, UsePipes } from '@nestjs/common';
+import { Controller, Param, Patch, Post } from '@nestjs/common';
+import { Delete, Get, Query } from '@nestjs/common';
 import { AppResponse } from '../../domain/models/app-response.model';
 import { DateTimeFormatterAdapter } from '../../infrastructure/date-time-formatter.adapter';
 import { CreateUserDto } from '../dtos/create-user.dto';
@@ -18,6 +8,7 @@ import { IUserService } from '../../domain/interfaces/user-service.interface';
 import { User } from '../../domain/entities/user.entity';
 import { CreateUserValidationPipe } from '../validators/create-user-validation.pipe';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { UUIDValidationService } from '../../domain/validators/uuid-validation.service';
 
 @ApiTags('v1/users')
 @Controller('v1/users')
@@ -93,6 +84,7 @@ export class UserController {
   @Patch(':id')
   @ApiOperation({ summary: 'Update user data' })
   @ApiResponse({ status: 200, description: 'User updated successfully' })
+  @ApiResponse({ status: 400, description: 'Validation error' })
   @ApiResponse({ status: 404, description: 'No user found with the given id' })
   @ApiResponse({
     status: 500,
@@ -102,6 +94,7 @@ export class UserController {
     @Param('id') id: string,
     @Query() updates: Partial<User>,
   ): Promise<AppResponse<User>> {
+    UUIDValidationService.validate(id);
     try {
       const user = await this.iUserService.update(id, updates);
       return {
@@ -122,12 +115,14 @@ export class UserController {
   @Delete(':id')
   @ApiOperation({ summary: 'Soft remove user' })
   @ApiResponse({ status: 200, description: 'User deleted successfully' })
+  @ApiResponse({ status: 400, description: 'Validation error' })
   @ApiResponse({ status: 404, description: 'No user found with the given id' })
   @ApiResponse({
     status: 500,
     description: `Can't soft delete user. Internal server error`,
   })
   async delete(@Param('id') id: string): Promise<AppResponse<User>> {
+    UUIDValidationService.validate(id);
     try {
       const route = await this.iUserService.softRemove(id);
       return {

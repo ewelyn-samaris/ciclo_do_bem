@@ -1,11 +1,5 @@
-import {
-  Body,
-  Controller,
-  HttpStatus,
-  Inject,
-  Param,
-  Post,
-} from '@nestjs/common';
+import { Controller, HttpStatus, Inject } from '@nestjs/common';
+import { Body, Param, Post } from '@nestjs/common';
 import { AppResponse } from '../../domain/models/app-response.model';
 import { DateTimeFormatterAdapter } from '../../infrastructure/date-time-formatter.adapter';
 import { CreateSchedulingDto } from '../dtos/create-scheduling.dto';
@@ -13,6 +7,7 @@ import { IRecyclerSchedulingService } from '../../domain/interfaces/recycler-sch
 import { CreateRecyclerSchedulingValidationService } from '../../domain/validators/create-recycler-scheduling-validation.service';
 import { RecyclerScheduling } from '../../domain/entities/recycler-scheduling.entity';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { UUIDValidationService } from '../../domain/validators/uuid-validation.service';
 
 @ApiTags('v1/recycler-schedulings')
 @Controller('v1/recycler-schedulings')
@@ -38,6 +33,7 @@ export class RecyclerSchedulingController {
     @Param('recyclerId') recyclerId: string,
     @Body() createRecyclerSchedulingDto: CreateSchedulingDto,
   ): Promise<AppResponse<RecyclerScheduling>> {
+    UUIDValidationService.validate(recyclerId);
     await this.createRecyclerSchedulingValidationService.validate(
       createRecyclerSchedulingDto,
       recyclerId,
