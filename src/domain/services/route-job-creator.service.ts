@@ -14,11 +14,11 @@ export class RouteJobCreator {
 
   private readonly logger = new Logger(RouteJobCreator.name);
 
-  @Cron('0 0 3 * * 1-6', { name: 'create-routes' })
+  @Cron('0 0 3 * * *', { name: 'create-routes' })
   async createNeighborhoodRoutes() {
     console.log('***** Iniciando JOB: create-routes *****');
     this.logger.debug(
-      'Called At 02:00 am on every day-of-week from Monday through Saturday',
+      'Called at 03:00 am on every day-of-week',
     );
 
     const dayRoutes: CreateNeighborhoodRoute[] =
