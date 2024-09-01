@@ -35,7 +35,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
           UserScheduling,
           NeighborhoodRoute,
         ],
-        synchronize: true,
+        synchronize: false,
         logging: true,
       }),
     }),
