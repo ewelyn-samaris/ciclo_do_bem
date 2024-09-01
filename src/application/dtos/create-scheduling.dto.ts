@@ -29,13 +29,13 @@ export class CreateSchedulingDto {
   @ValidateIf((obj) => obj.type === SchedulingType.RECYCLER)
   @IsNotEmpty({ message: `Data must be provided: city` })
   @IsString({ message: `Invalid data type: city` })
-  @ApiProperty({ example: 'Recife', description: 'City name' })
+  @ApiProperty({ example: 'Recife', description: 'City name. Attribute required for recycler scheduling only' })
   city: string;
 
   @ValidateIf((obj) => obj.type === SchedulingType.RECYCLER)
   @IsNotEmpty({ message: `Data must be provided: neighborhood` })
   @IsString({ message: `Invalid data type: neighborhood` })
-  @ApiProperty({ example: 'Areias', description: 'Neighborhood name' })
+  @ApiProperty({ example: 'Areias', description: 'Neighborhood name. Attribute required for recycler scheduling only' })
   neighborhood: string;
 
   @ValidateIf((obj) => obj.type === SchedulingType.USER)
@@ -44,7 +44,7 @@ export class CreateSchedulingDto {
   @IsString({ message: `Invalid data type: note` })
   @ApiProperty({
     example: 'Passar até às 10h',
-    description: 'Aditional information',
+    description: 'Aditional information. Optional attribute. Attribute existing only for user scheduling',
   })
   note?: string;
 }

@@ -36,7 +36,7 @@ export class CreateAddressDto {
   @IsString({ message: `Invalid data type: complement` })
   @ApiProperty({
     example: 'Casa A, 1º Andar',
-    description: 'Address Complement',
+    description: 'Address Complement. Optional attribute',
   })
   complement?: string;
 }
