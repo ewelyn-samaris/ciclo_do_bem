@@ -1,9 +1,6 @@
-import {
-  BadRequestException,
-  Inject,
-  Injectable,
-  NotFoundException,
-} from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
+import { NotFoundException } from '@nestjs/common';
+import { BadRequestException } from '@nestjs/common';
 import { IUserService } from '../interfaces/user-service.interface';
 import { User } from '../entities/user.entity';
 

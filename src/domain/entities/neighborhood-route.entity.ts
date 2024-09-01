@@ -1,10 +1,5 @@
-import {
-  Column,
-  Entity,
-  JoinColumn,
-  OneToMany,
-  PrimaryGeneratedColumn,
-} from 'typeorm';
+import { Column, Entity } from 'typeorm';
+import { OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 import { UserScheduling } from './user-scheduling.entity';
 import { DayOfWeek } from '../enums/day-of-week.enum';
 import { CreateNeighborhoodRoute } from '../models/create-neighborhood-route.model';

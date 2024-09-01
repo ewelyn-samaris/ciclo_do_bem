@@ -1,10 +1,6 @@
-import {
-  BadRequestException,
-  Inject,
-  Injectable,
-  InternalServerErrorException,
-  NotFoundException,
-} from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
+import { NotFoundException } from '@nestjs/common';
+import { InternalServerErrorException } from '@nestjs/common';
 import { User } from '../entities/user.entity';
 import { CreateUserDto } from '../../application/dtos/create-user.dto';
 import { Address } from '../entities/address.entity';

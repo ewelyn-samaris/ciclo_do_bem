@@ -1,10 +1,6 @@
-import {
-  BadRequestException,
-  Inject,
-  Injectable,
-  InternalServerErrorException,
-  NotFoundException,
-} from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
+import { NotFoundException } from '@nestjs/common';
+import { InternalServerErrorException } from '@nestjs/common';
 import { UserScheduling } from '../entities/user-scheduling.entity';
 import { CreateSchedulingDto } from '../../application/dtos/create-scheduling.dto';
 import { SchedulingFactory } from '../factories/scheduling.factory';

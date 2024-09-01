@@ -1,9 +1,5 @@
-import {
-  Column,
-  CreateDateColumn,
-  DeleteDateColumn,
-  PrimaryGeneratedColumn,
-} from 'typeorm';
+import { Column, CreateDateColumn } from 'typeorm';
+import { DeleteDateColumn, PrimaryGeneratedColumn } from 'typeorm';
 import { DayOfWeek } from '../enums/day-of-week.enum';
 import { WorkShift } from '../enums/work-shift.enum';
 

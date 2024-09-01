@@ -1,10 +1,5 @@
-import {
-  BeforeSoftRemove,
-  Column,
-  Entity,
-  JoinColumn,
-  OneToMany,
-} from 'typeorm';
+import { BeforeSoftRemove, Column } from 'typeorm';
+import { Entity, OneToMany } from 'typeorm';
 import { RecyclerScheduling } from './recycler-scheduling.entity';
 import { Person } from './person.entity';
 import { CreateRecyclerDto } from '../../application/dtos/create-recycler.dto';

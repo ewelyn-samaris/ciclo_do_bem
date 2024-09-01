@@ -1,10 +1,5 @@
-import {
-  BeforeSoftRemove,
-  Column,
-  Entity,
-  JoinColumn,
-  OneToOne,
-} from 'typeorm';
+import { BeforeSoftRemove, Column, Entity } from 'typeorm';
+import { JoinColumn, OneToOne } from 'typeorm';
 import { UserScheduling } from './user-scheduling.entity';
 import { Person } from './person.entity';
 import { Address } from './address.entity';

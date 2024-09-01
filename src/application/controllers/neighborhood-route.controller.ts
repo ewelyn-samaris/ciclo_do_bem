@@ -1,11 +1,5 @@
-import {
-  Controller,
-  Get,
-  HttpStatus,
-  Inject,
-  Param,
-  Query,
-} from '@nestjs/common';
+import { Controller, HttpStatus, Inject } from '@nestjs/common';
+import { Get, Param, Query } from '@nestjs/common';
 import { INeighborhoodRouteService } from '../../domain/interfaces/neighborhood-route-service.interface';
 import { DateTimeFormatterAdapter } from '../../infrastructure/date-time-formatter.adapter';
 import { AppResponse } from '../../domain/models/app-response.model';

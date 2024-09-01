@@ -1,9 +1,6 @@
-import {
-  Inject,
-  Injectable,
-  InternalServerErrorException,
-  NotFoundException,
-} from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
+import { NotFoundException } from '@nestjs/common';
+import { InternalServerErrorException } from '@nestjs/common';
 import { NeighborhoodRoute } from '../entities/neighborhood-route.entity';
 import { DayOfWeek } from '../enums/day-of-week.enum';
 import { WorkShift } from '../enums/work-shift.enum';

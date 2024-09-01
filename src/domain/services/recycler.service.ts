@@ -1,10 +1,6 @@
-import {
-  BadRequestException,
-  Inject,
-  Injectable,
-  InternalServerErrorException,
-  NotFoundException,
-} from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
+import { NotFoundException } from '@nestjs/common';
+import { InternalServerErrorException } from '@nestjs/common';
 import { Recycler } from '../entities/recycler.entity';
 import { CreateRecyclerDto } from '../../application/dtos/create-recycler.dto';
 import { RecyclerFactory } from '../factories/recycler.factory';

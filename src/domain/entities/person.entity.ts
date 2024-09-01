@@ -1,10 +1,5 @@
-import {
-  Column,
-  CreateDateColumn,
-  DeleteDateColumn,
-  PrimaryGeneratedColumn,
-  UpdateDateColumn,
-} from 'typeorm';
+import { Column, CreateDateColumn, DeleteDateColumn } from 'typeorm';
+import { PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
 
 export abstract class Person {
   @PrimaryGeneratedColumn('uuid')

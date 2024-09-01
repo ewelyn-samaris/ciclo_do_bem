@@ -1,10 +1,5 @@
-import {
-  IsEnum,
-  IsNotEmpty,
-  IsOptional,
-  IsString,
-  ValidateIf,
-} from 'class-validator';
+import { IsEnum, IsNotEmpty, IsOptional } from 'class-validator';
+import { IsString, ValidateIf } from 'class-validator';
 import { DayOfWeek } from '../../domain/enums/day-of-week.enum';
 import { SchedulingType } from '../../domain/enums/scheduling-type.enum';
 import { WorkShift } from '../../domain/enums/work-shift.enum';
@@ -29,13 +24,20 @@ export class CreateSchedulingDto {
   @ValidateIf((obj) => obj.type === SchedulingType.RECYCLER)
   @IsNotEmpty({ message: `Data must be provided: city` })
   @IsString({ message: `Invalid data type: city` })
-  @ApiProperty({ example: 'Recife', description: 'City name. Attribute required for recycler scheduling only' })
+  @ApiProperty({
+    example: 'Recife',
+    description: 'City name. Attribute required for recycler scheduling only',
+  })
   city: string;
 
   @ValidateIf((obj) => obj.type === SchedulingType.RECYCLER)
   @IsNotEmpty({ message: `Data must be provided: neighborhood` })
   @IsString({ message: `Invalid data type: neighborhood` })
-  @ApiProperty({ example: 'Areias', description: 'Neighborhood name. Attribute required for recycler scheduling only' })
+  @ApiProperty({
+    example: 'Areias',
+    description:
+      'Neighborhood name. Attribute required for recycler scheduling only',
+  })
   neighborhood: string;
 
   @ValidateIf((obj) => obj.type === SchedulingType.USER)
@@ -44,7 +46,8 @@ export class CreateSchedulingDto {
   @IsString({ message: `Invalid data type: note` })
   @ApiProperty({
     example: 'Passar até às 10h',
-    description: 'Aditional information. Optional attribute. Attribute existing only for user scheduling',
+    description:
+      'Aditional information. Optional attribute. Attribute existing only for user scheduling',
   })
   note?: string;
 }
